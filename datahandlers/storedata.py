@@ -9,3 +9,7 @@ approach:
 
 import pandas as pd
 from datamodeler import * ### # IMPROVE this
+import sqlite3
+
+conn=sqlite3.connect("chatid_sampledb.db")
+conn.close()
