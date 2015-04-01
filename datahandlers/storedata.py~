@@ -1,0 +1,6 @@
+"""
+store the data set(s)
+
+approach:
+-use sqlite db to store into local dir
+"""
