@@ -1,0 +1,11 @@
+"""
+model the dataset
+
+approach:
+-split full DataFrame into sub DataFrames
+ based on 'room_id' and/or 'jid','nick' ?
+-keep entire DataFrame whole
+"""
+
+from jsonparser import room_idDf
+
