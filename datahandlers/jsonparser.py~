@@ -1,0 +1,16 @@
+"""
+approach: 
+1. use pandas to parse json data
+2. pandas DataFrame to get full aggregated dataset
+3. split full DataFrame into sub DataFrames based on 'room_id'
+
+ideas (?):
+-also split by user ('jid') and/or name ('nick')
+"""
+
+import pandas as pd
+
+fulldata=pd.io.json.read_json(
+    "../sampledata/sample_chat_events.json"
+)
+
