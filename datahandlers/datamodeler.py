@@ -10,8 +10,12 @@ approach:
 
 from jsonparser import room_idDf
 
-listof_room_idDfs=[
+filterBy_room_id=lambda room_id: (
     room_idDf[room_idDf.index==room_id]
+             .sort(["datetime","jid","nick"])
+)
+listof_room_idDfs=[
+    filterBy_room_id(room_id)
     for room_id in set(room_idDf.index.values)
 ]
 print len(set(room_idDf.index.values)) # 19
