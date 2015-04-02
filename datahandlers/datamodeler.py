@@ -14,6 +14,9 @@ filterBy_room_id=lambda room_id: (
     room_idDf[room_idDf.index==room_id]
              .sort(["datetime","jid","nick"])
 )
+# split by room_id: in case data is rendered to UI
+# easier for getting specific room_id in respect to user(s)
+# and sorted by datetime for ascending/descending call
 listof_room_idDfs=[
     filterBy_room_id(room_id)
     for room_id in set(room_idDf.index.values)
