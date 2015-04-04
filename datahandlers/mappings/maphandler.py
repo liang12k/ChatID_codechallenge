@@ -8,6 +8,7 @@ jid
 """
 
 import ast
+import pickle
 import logging
 
 def getmapper(colName=""):
@@ -26,3 +27,21 @@ def getmapper(colName=""):
     if not mappingdict:
         logging.error("\nmapping for column name '%s' is unavailable\n",colName)
     return mappingdict
+
+def setmappings(colName="",colValsAsList=[]):
+    """
+        :param str colName: column name to create mapping for in a .txt file
+        :param list colValsAsList: the column values as a dict where key
+    """
+    if not (colName and colValsAsList): return
+    colmappings=getmapper(colName)
+    # get set differences, any remaining values will need to be mapped
+    colValsAsList=set(colValsAsList)-set(colmappings.keys())
+    for colval in colValsAsList:
+        # give column value mapping number of len(current_mappings)
+        # since the first mapping number is 0
+        colmappings[colval]=len(colmappings)
+    mappingfile=open(colName+".txt","ab+")
+    pickle.dump(colmappings,mappingfile)
+    mappingfile.close()
+    logging.info("\nsuccessfully created mappings for '%s' in mapping file: '%s.txt'", colName,colName)
