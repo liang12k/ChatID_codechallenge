@@ -10,6 +10,12 @@ approach:
 
 from jsonparser import room_idDf
 
+# **note:
+# room_idDf 'room_id','jid' column values
+# are replaced by number mappings
+# not sure if the below splitting in 'room_id'
+# normalization is needed ??
+
 filterBy_room_id=lambda room_id: (
     room_idDf[room_idDf.index==room_id]
              .sort(["datetime","jid","nick"])
