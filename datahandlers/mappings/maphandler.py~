@@ -1,0 +1,15 @@
+"""
+this module is to handle getting mapping values
+for specific key name
+
+currently handling:
+room_id
+jid
+"""
+
+def getmapper(colName=""):
+    """
+        :param str colName: column name to map to int value
+        :return dict: the current mapping or blank if column name is unavailable
+    """
+    
