@@ -19,9 +19,7 @@ def getmapper(colName=""):
     mappingdict={}
     try:
         with open(colName+".txt","r") as f:
-            colmappings=f.read()
-            if colmappings:
-                mappingdict=ast.literal_eval(colmappings)
+            mappingdict=pickle.load(f)
     except IOError as excp:
         pass # if file doesn't exist, logging.error message will notify
     if not mappingdict:
@@ -33,7 +31,11 @@ def setmappings(colName="",colValsAsList=[]):
         :param str colName: column name to create mapping for in a .txt file
         :param list colValsAsList: the column values as a dict where key
     """
-    if not (colName and colValsAsList): return
+    if not (colName and colValsAsList):
+        logging.warning(
+            "\nneed column name and list of its values\nentered: '%s','%s'\n",
+            str(colName),str(colValsAsList)
+        ); return
     colmappings=getmapper(colName)
     # get set differences, any remaining values will need to be mapped
     colValsAsList=set(colValsAsList)-set(colmappings.keys())
