@@ -22,7 +22,7 @@ def getmapper(colName=""):
             mappingdict=pickle.load(f)
     except IOError as excp:
         pass # if file doesn't exist, logging.error message will notify
-    if not mappingdict:
+    if not (mappingdict and isinstance(mappingdict,dict)):
         logging.error("\nmapping for column name '%s' is unavailable\n",colName)
     return mappingdict
 
