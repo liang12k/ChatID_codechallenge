@@ -11,7 +11,7 @@ import ast
 import pickle
 import logging
 
-def getmappings(colName=""):
+def getColumnMappings(colName=""):
     """
         :param str colName: column name to map to int value
         :return dict: the current mapping or blank if column name is unavailable
@@ -26,7 +26,7 @@ def getmappings(colName=""):
         logging.error("\nmapping for column name '%s' is unavailable\n",colName)
     return mappingdict
 
-def setmappings(colName="",colValsAsList=[]):
+def setColumnMappings(colName="",colValsAsList=[]):
     """
         :param str colName: column name to create mapping for in a .txt file
         :param list colValsAsList: the column values as a dict where key
@@ -37,7 +37,7 @@ def setmappings(colName="",colValsAsList=[]):
             "\nneed column name and list of its values\nentered: '%s','%s'\n",
             str(colName),str(colValsAsList)
         ); return
-    colmappings=getmappings(colName)
+    colmappings=getColumnMappings(colName)
     # get set differences, any remaining values will need to be mapped
     colValsAsList=set(colValsAsList)-set(colmappings.keys())
     for colval in colValsAsList:

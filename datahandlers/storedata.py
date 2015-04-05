@@ -34,7 +34,12 @@ def storedataset(
         If not None, then rows will be written in batches of this size at a time. 
         If None, all rows will be written at once.
     """
-    dbName=dbName or "chatid_sampledb.db"
+    dbName=dbName or "chatid_sampledb"
     conn=sqlite3.connect(dbName)
-    dataFrame.to_sql(tableName,conn)
+    dataFrame.to_sql(
+        tableName,
+        conn,
+        if_exists=ifExists,
+        chunksize=chunkSize,
+    )
     conn.close()

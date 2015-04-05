@@ -11,5 +11,7 @@ from storedata import storedataset
 storedataset(
     "sample_chat_events",
     fulldata,
-    dbName="chatid_sampledb"
+    dbName="chatid_sampledb",
+    # ifExists: this is a sample run, will replace with table for every call
+    ifExists="replace" 
 )

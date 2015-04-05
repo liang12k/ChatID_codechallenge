@@ -18,7 +18,7 @@ fulldata=pd.io.json.read_json(
 
 colsToMap=["room_id","jid"]
 for colname in colsToMap:
-    mappingsdict=maphandler.setmappings(
+    mappingsdict=maphandler.setColumnMappings(
         colname,
         fulldata[colname].tolist()
     )
@@ -30,7 +30,12 @@ for colname in colsToMap:
         "%s:\nvalues:\n%s",
         colname,str(set(fulldata[colname].values))
     )
-    
+# set the 'meta' column to dtype str
+# **note: when reading extracted data from sqllite,
+#         need to do an ast.literal_eval on it to get
+#         back the dict object
+fulldata["meta"]=fulldata["meta"].astype(str)
+
 # set 'room_id' column name as the index column
 room_idDf=fulldata.set_index(["room_id"])
 room_idDf.index.name="room_id"
