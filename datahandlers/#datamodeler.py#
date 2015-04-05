@@ -1,0 +1,31 @@
+"""
+model the dataset
+
+approach:
+-split full DataFrame into sub DataFrames
+ based on 'room_id' and/or 'jid','nick' ?
+-keep entire DataFrame whole
+
+"""
+
+from jsonparser import room_idDf
+
+# **note:
+# room_idDf 'room_id','jid' column values
+# are replaced by number mappings
+# not sure if the below splitting in 'room_id'
+# normalization is needed ??
+
+filterBy_room_id=lambda room_id: (
+    room_idDf[room_idDf.index==room_id]
+             .sort(["datetime","jid","nick"])
+)
+# split by room_id: in case data is rendered to UI
+# easier for getting specific room_id in respect to user(s)
+# and sorted by datetime for ascending/descending call
+listof_room_idDfs=[
+    filterBy_room_id(room_id)
+    for room_id in set(room_idDf.index.values)
+    cd ]
+print len(set(room_idDf.index.values)) # 19
+print len(listof_room_idDfs) # 19
