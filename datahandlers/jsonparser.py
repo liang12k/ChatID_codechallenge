@@ -30,10 +30,6 @@ for colname in colsToMap:
         "%s:\nvalues:\n%s",
         colname,str(set(fulldata[colname].values))
     )
-# create 'row_index' column to log the current index
-# value of read data; goal is to have a 'track' of
-# dataset if it gets partitioned into multiple dbs
-fulldata["row_index"]=fulldata.index.values
     
 # set 'room_id' column name as the index column
 room_idDf=fulldata.set_index(["room_id"])

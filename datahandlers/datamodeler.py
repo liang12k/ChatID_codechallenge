@@ -8,7 +8,12 @@ approach:
 
 """
 
-from jsonparser import room_idDf
+from jsonparser import room_idDf, fulldata
+
+# create 'row_index' column to log the current index
+# value of read data; goal is to have a 'track' of
+# dataset if it gets partitioned into multiple dbs
+fulldata["row_index"]=fulldata.index.values
 
 # **note:
 # room_idDf 'room_id','jid' column values
