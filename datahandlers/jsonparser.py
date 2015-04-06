@@ -4,7 +4,9 @@ parse the json dataset
 approach: 
 1. use pandas to parse json data
 2. pandas DataFrame to get full aggregated dataset
-
+3. append the row index as an addt'l column of values
+   as a point of referral in case dataset gets
+   partitioned into multiple dbs
 """
 
 import pandas as pd
@@ -14,7 +16,6 @@ import logging
 fulldata=pd.io.json.read_json(
     "../sampledata/sample_chat_events.json"
 ) # [340 rows x 12 columns]
-
 
 colsToMap=["room_id","jid"]
 for colname in colsToMap:
