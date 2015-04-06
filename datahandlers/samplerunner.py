@@ -5,13 +5,27 @@ this is a general module to handle the:
 3. store fulldata data set into sqllite db
 """
 
+from sqlalchemy import create_engine
+from pandas import read_sql_table
 from datamodeler import fulldata
 from storedata import storedataset
 
+# dbname="sqlite:///chatid_sampledb.db"
+dbname="chatid_sample"
+tablename="sample_chat_events"
+
 storedataset(
-    "sample_chat_events",
+    tablename,
     fulldata,
-    dbName="chatid_sampledb",
+    dbName=dbname,
     # ifExists: this is a sample run, will replace with table for every call
     ifExists="replace" 
 )
+
+'''
+conn=create_engine(dbname)
+samplechatevents_table=read_sql_table(
+    tablename,
+    conn
+)
+'''

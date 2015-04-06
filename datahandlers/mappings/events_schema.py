@@ -6,5 +6,6 @@ pandas.DataFrame.to_sql call to load DataFrame
 into sqllite db
 """
 
-EVENTSSCHEMA={
+EVENTS_SCHEMA={
+    "meta" : str,
 }

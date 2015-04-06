@@ -34,7 +34,11 @@ for colname in colsToMap:
 # **note: when reading extracted data from sqllite,
 #         need to do an ast.literal_eval on it to get
 #         back the dict object
-fulldata["meta"]=fulldata["meta"].astype(str)
+# fulldata["meta"]=fulldata["meta"].astype(str)
+fulldata=maphandler.doSchemaMappings(
+    fulldata,
+    "events"
+)
 
 # set 'room_id' column name as the index column
 room_idDf=fulldata.set_index(["room_id"])

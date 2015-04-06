@@ -10,6 +10,7 @@ jid
 import ast
 import pickle
 import logging
+from events_schema import EVENTS_SCHEMA
 
 def getColumnMappings(colName=""):
     """
@@ -49,3 +50,36 @@ def setColumnMappings(colName="",colValsAsList=[]):
     mappingfile.close()
     logging.info("\nsuccessfully created mappings for '%s' in mapping file: '%s.txt'", colName,colName)
     return colmappings
+
+def doSchemaMappings(dataFrame,typeOfData=""):
+    """
+        if schema mappings are available, convert schema
+    
+        :type pandas.DataFrame: dataFrame
+        :param str typeOfData: indicates which schema to get, if available (ie: 'events' gets events data schema mappings)
+        :return pandas.DataFrame: DataFrame with new mapped schema, if available
+    """
+    schemamappings={
+        "events" : EVENTS_SCHEMA
+    }
+    schemamaps=schemamappings.get(typeOfData)
+    if not schemamaps:
+        logging.info(
+            "\nno such schema mapping available for '%s'\n",
+            typeOfData
+        )
+    else:
+        # find the column names to map to
+        # new schema type
+        colsToMap=list(
+            (set(dataFrame.columns.values)
+                 .intersection(set(schemamaps.keys())))
+        )
+        for colname in colsToMap:
+            newdtype=schemamaps.get(colname)
+            dataFrame[colname]=dataFrame[colname].astype(newdtype)
+            logging.info(
+                "\nconverted '%s' to type '%s'\n",
+                colname, newdtype
+            )
+    return dataFrame
