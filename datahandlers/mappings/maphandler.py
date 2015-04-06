@@ -48,7 +48,10 @@ def setColumnMappings(colName="",colValsAsList=[]):
     mappingfile=open("./"+colName+".txt","ab+")
     pickle.dump(colmappings,mappingfile)
     mappingfile.close()
-    logging.info("\nsuccessfully created mappings for '%s' in mapping file: '%s.txt'", colName,colName)
+    logging.info(
+        "\nsuccessfully created mappings for '%s' in mapping file: '%s.txt'",
+        colName,colName
+    )
     return colmappings
 
 def doSchemaMappings(dataFrame,typeOfData=""):
@@ -56,7 +59,8 @@ def doSchemaMappings(dataFrame,typeOfData=""):
         if schema mappings are available, convert schema
     
         :type pandas.DataFrame: dataFrame
-        :param str typeOfData: indicates which schema to get, if available (ie: 'events' gets events data schema mappings)
+        :param str typeOfData: indicates which schema to get, if available
+                               (ie: 'events' gets events data schema mappings)
         :return pandas.DataFrame: DataFrame with new mapped schema, if available
     """
     schemamappings={
@@ -72,8 +76,8 @@ def doSchemaMappings(dataFrame,typeOfData=""):
         # find the column names to map to
         # new schema type
         colsToMap=list(
-            (set(dataFrame.columns.values)
-                 .intersection(set(schemamaps.keys())))
+            (set(dataFrame.columns.values).intersection(
+                set(schemamaps.keys())))
         )
         for colname in colsToMap:
             newdtype=schemamaps.get(colname)
