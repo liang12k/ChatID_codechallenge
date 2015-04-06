@@ -7,20 +7,26 @@ this is a general module to handle the:
 
 from sqlalchemy import create_engine
 from pandas import read_sql_table
-from datamodeler import fulldata
-from storedata import storedataset
+import jsonparser
+import datamodeler
+import storedata
+
+dataFrame=jsonparser.parse_chatevents_jsondata(
+    "../sampledata/sample_chat_events.json"
+)
+dataFrame=datamodeler.model_chatevents_data(dataFrame)
 
 dbname="sqlite:///chatid_sampledb.db"
 tablename="sample_chat_events"
-
-storedataset(
+storedata.storedataset(
     tablename,
-    fulldata,
+    dataFrame,
     dbName=dbname,
     # ifExists: this is a sample run, will replace with table for every call
     ifExists="replace" 
 )
 
+# read the above stored DataFrame table
 conn=create_engine(dbname)
 samplechatevents_table=read_sql_table(
     tablename,

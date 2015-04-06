@@ -13,34 +13,35 @@ import pandas as pd
 from mappings import maphandler
 import logging
 
-fulldata=pd.io.json.read_json(
-    "../sampledata/sample_chat_events.json"
-) # [340 rows x 12 columns]
-
-colsToMap=["room_id","jid"]
-for colname in colsToMap:
-    mappingsdict=maphandler.setColumnMappings(
-        colname,
-        fulldata[colname].tolist()
+def parse_chatevents_jsondata(filePath):
+    """
+        gets chat events json data and converts it
+        into a pandas DataFrame
+    
+        :param str filePath: path to json data file
+        :return: pandas.DataFrame
+    """
+    fulldata=pd.io.json.read_json(filePath)
+    
+    # handling the 'sample_chat_events.json' file
+    # with 'room_id','jid' columns
+    colsToMap=["room_id","jid"]
+    for colname in colsToMap:
+        mappingsdict=maphandler.setColumnMappings(
+            colname,
+            fulldata[colname].tolist()
+        )
+        fulldata[colname]=fulldata.apply(
+            lambda row: mappingsdict.get(row[colname]),
+            axis=1  
+        )
+        logging.info(
+            "%s:\nvalues:\n%s",
+            colname,str(set(fulldata[colname].values))
+        )
+    # if schema conversion is needed, do so
+    fulldata=maphandler.doSchemaMappings(
+        fulldata,
+        "events"
     )
-    fulldata[colname]=fulldata.apply(
-        lambda row: mappingsdict.get(row[colname]),
-        axis=1  
-    )
-    logging.info(
-        "%s:\nvalues:\n%s",
-        colname,str(set(fulldata[colname].values))
-    )
-# set the 'meta' column to dtype str
-# **note: when reading extracted data from sqllite,
-#         need to do an ast.literal_eval on it to get
-#         back the dict object
-# fulldata["meta"]=fulldata["meta"].astype(str)
-fulldata=maphandler.doSchemaMappings(
-    fulldata,
-    "events"
-)
-
-# set 'room_id' column name as the index column
-room_idDf=fulldata.set_index(["room_id"])
-room_idDf.index.name="room_id"
+    return fulldata

@@ -8,7 +8,6 @@ approach:
 """
 
 import pandas as pd
-from datamodeler import * ### # IMPROVE this
 from sqlalchemy import create_engine
 
 def storedataset(
@@ -26,15 +25,15 @@ def storedataset(
         :param pandas.DataFrame dataFrame: dataset as DataFrame
         :param str dbName: database name str recognizable by sqlalchemy.create_engine
         :param bool createNewDb: bool to create new db
-        :param str ifExists: (same as pandas.DataFrame.to_sql arg) {'fail', 'replace', 'append'}
-        fail: If table exists, do nothing.
-        replace: If table exists, drop it, recreate it, and insert data.
-        append: If table exists, insert data. Create if does not exist.
+        :param str ifExists: (same as pandas.DataFrame.to_sql arg)
+                             {'fail', 'replace', 'append'}
+                             fail: If table exists, do nothing.
+                             replace: If table exists, drop it, recreate it, and insert data.
+                             append: If table exists, insert data. Create if does not exist.
         :param int chunkSize: (same as pandas.DataFrame.to_sql arg) 
-        If not None, then rows will be written in batches of this size at a time. 
-        If None, all rows will be written at once.
+                              If not None, then rows will be written in batches of this size at a time. 
+                              If None, all rows will be written at once.
     """
-    dbName=dbName or "chatid_sampledb"
     conn=create_engine(dbName)
     dataFrame.to_sql(
         tableName,
