@@ -9,7 +9,7 @@ approach:
 
 import pandas as pd
 from datamodeler import * ### # IMPROVE this
-import sqlite3
+from sqlalchemy import create_engine
 
 def storedataset(
         tableName,
@@ -24,7 +24,7 @@ def storedataset(
 
         :param str tableName: table name to write dataset into db
         :param pandas.DataFrame dataFrame: dataset as DataFrame
-        :param str dbName: database name
+        :param str dbName: database name str recognizable by sqlalchemy.create_engine
         :param bool createNewDb: bool to create new db
         :param str ifExists: (same as pandas.DataFrame.to_sql arg) {'fail', 'replace', 'append'}
         fail: If table exists, do nothing.
@@ -35,11 +35,10 @@ def storedataset(
         If None, all rows will be written at once.
     """
     dbName=dbName or "chatid_sampledb"
-    conn=sqlite3.connect(dbName)
+    conn=create_engine(dbName)
     dataFrame.to_sql(
         tableName,
         conn,
         if_exists=ifExists,
         chunksize=chunkSize,
     )
-    conn.close()

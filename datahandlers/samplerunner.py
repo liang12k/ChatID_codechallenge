@@ -10,8 +10,7 @@ from pandas import read_sql_table
 from datamodeler import fulldata
 from storedata import storedataset
 
-# dbname="sqlite:///chatid_sampledb.db"
-dbname="chatid_sample"
+dbname="sqlite:///chatid_sampledb.db"
 tablename="sample_chat_events"
 
 storedataset(
@@ -22,10 +21,8 @@ storedataset(
     ifExists="replace" 
 )
 
-'''
 conn=create_engine(dbname)
 samplechatevents_table=read_sql_table(
     tablename,
     conn
 )
-'''
