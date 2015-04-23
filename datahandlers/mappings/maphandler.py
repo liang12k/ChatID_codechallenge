@@ -12,9 +12,13 @@ import pickle
 import logging
 from events_schema import EVENTS_SCHEMA
 
-def getColumnMappings(colName=""):
+def getColumnMappings(colName="",reverseMapping=False):
     """
         :param str colName: column name to map to int value
+        :param bool reverseMapping: if True, the mapped values (dict.values) 
+                                    become the key as it's unique
+                                    default as False to take column's values as keys
+                                    this will affect the return dict key-value pairings
         :return dict: the current mapping or blank if column name is unavailable
     """
     mappingdict={}
@@ -25,6 +29,10 @@ def getColumnMappings(colName=""):
         mappingdict={} # if file doesn't exist, logging.error message will notify
     if not (mappingdict and isinstance(mappingdict,dict)):
         logging.error("\nmapping for column name '%s' is unavailable\n",colName)
+    if reverseMapping and mappingdict:
+        # perform reverse mapping where values become keys and visa versa
+        # all values are unique int values (similar to sql's AUTO_INCREMENT)
+        mappingdict=dict((value, key) for key, value in mappingdict.iteritems())
     return mappingdict
 
 def setColumnMappings(colName="",colValsAsList=[]):

@@ -27,3 +27,26 @@ Notes:
 ------
 This isn't intended to be more than a couple hours of work, so leaving TODO comments on things you didn't take time to implement is encouraged.
 We also encourage you to obey PEP8 and PEP20.
+
+--------------
+April 22, 2015
+
+questions asked:
+-get distinct count of room_id
+-get count of events (id col) in each room_id
+- ^ follow up: get average of events (id col)
+-do a groupby of room_id
+
+feedback:
+-mapping room_id strings is excessive, no need
+
+ideas:
+-create table for room_id mappings
+ >currently have a dict to map room_id -> int val
+ >need to get a reverse of int val -> room_id
+  this can use the AUTO_INCREMENT feature in sql
+  (see datahandler.mappings.maphandler)
+-alternative modeling of data
+ >1-to-many relationship of csid to jid
+-handling transactions and LOCK the sql tables when
+ multiple threads are editing to prevent duplication
